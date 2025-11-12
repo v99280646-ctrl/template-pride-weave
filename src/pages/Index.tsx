@@ -4,6 +4,7 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { PromoBar } from "@/components/PromoBar";
 import { CategoryCard } from "@/components/CategoryCard";
 import { ProductCard } from "@/components/ProductCard";
+import { ChatButton } from "@/components/ChatButton";
 
 // Import product images
 import saree1 from "@/assets/saree-1.jpg";
@@ -221,6 +222,7 @@ const Index = () => {
 
       {/* Mobile Navigation */}
       <MobileNav />
+      <ChatButton />
     </div>
   );
 };

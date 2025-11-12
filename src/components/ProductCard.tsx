@@ -43,7 +43,7 @@ export const ProductCard = ({ title, price, originalPrice, image, imageAlt }: Pr
           {title}
         </h3>
         
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col-reverse md:flex-row md:items-center gap-1 md:gap-2">
           <span className="text-xl font-bold text-primary">AED {price}</span>
           {originalPrice && (
             <span className="text-sm text-muted-foreground line-through">
