@@ -99,7 +99,15 @@ export default function ProductDetail() {
             variant="outline"
             size="lg"
             className="flex-1"
-            onClick={() => navigate("/chat")}
+            onClick={() => navigate("/chat", {
+              state: {
+                product: {
+                  title: "Traditional Kanchipuram Silk Saree",
+                  price: "2,399",
+                  originalPrice: "2,999"
+                }
+              }
+            })}
           >
             <MessageCircle className="h-5 w-5 mr-2" />
             Chat
