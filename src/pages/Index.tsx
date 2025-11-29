@@ -4,6 +4,8 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { PromoBar } from "@/components/PromoBar";
 import { CategoryCard } from "@/components/CategoryCard";
 import { ProductCard } from "@/components/ProductCard";
+import { useEffect, useState } from "react";
+import { getPublishedWebCatalogueByAccountTypeId, getPublishedWebProductsByCatalogueId, Catalogue, Product } from "@/services/api";
 
 // Import product images
 import saree1 from "@/assets/saree-1.jpg";
@@ -124,6 +126,34 @@ const products = [
 ];
 
 const Index = () => {
+  const [catalogues, setCatalogues] = useState<Catalogue[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const catalogueResponse = await getPublishedWebCatalogueByAccountTypeId();
+        const cataloguesData = catalogueResponse.data || [];
+        setCatalogues(cataloguesData);
+
+        if (cataloguesData.length > 0) {
+          const productsResponse = await getPublishedWebProductsByCatalogueId({
+            catalogId: cataloguesData[0]._id,
+            limit: 8,
+          });
+          setProducts(productsResponse.data || []);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
       {/* Header */}
@@ -143,15 +173,29 @@ const Index = () => {
               Our Collections
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Discover our curated collections of authentic Kanchipuram sarees and exquisite jewellery
+              Discover our curated collections
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {categories.map((category, index) => (
-              <CategoryCard key={index} {...category} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="animate-pulse bg-muted h-64 rounded-lg" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+              {catalogues.map((catalogue) => (
+                <CategoryCard
+                  key={catalogue._id}
+                  title={catalogue.name}
+                  description={`${catalogue.totalProducts} Products`}
+                  image={catalogue.image}
+                  imageAlt={catalogue.name}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -160,18 +204,34 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground mb-3">
-              Featured Collections
+              Featured Products
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Handpicked selections from our latest Kanchipuram silk sarees and jewellery
+              Handpicked selections from our latest collections
             </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {products.map((product, index) => (
-              <ProductCard key={index} {...product} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="animate-pulse bg-muted h-80 rounded-lg" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {products.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  slug={product.slug}
+                  title={product.name}
+                  price={product.pricing.salePrice.toString()}
+                  originalPrice={product.pricing.basePrice.toString()}
+                  image={product.images[0] || ""}
+                  imageAlt={product.name}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

@@ -4,6 +4,7 @@ import { Heart, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
+  slug: string;
   title: string;
   price: string;
   originalPrice?: string;
@@ -11,13 +12,13 @@ interface ProductCardProps {
   imageAlt: string;
 }
 
-export const ProductCard = ({ title, price, originalPrice, image, imageAlt }: ProductCardProps) => {
+export const ProductCard = ({ slug, title, price, originalPrice, image, imageAlt }: ProductCardProps) => {
   const navigate = useNavigate();
   
   return (
     <Card 
       className="group overflow-hidden border-border hover:shadow-xl transition-all duration-300 cursor-pointer"
-      onClick={() => navigate("/product/1")}
+      onClick={() => navigate(`/product/${slug}`)}
     >
       <div className="relative aspect-[3/4] overflow-hidden bg-muted">
         <img
