@@ -1,8 +1,8 @@
-import { Header } from "@/components/Header";
+import { Header } from "@/components/Header.dynamic";
 import { MobileNav } from "@/components/MobileNav";
-import { HeroSlider } from "@/components/HeroSlider";
-import { PromoBar } from "@/components/PromoBar";
-import { CategoryCard } from "@/components/CategoryCard";
+import { HeroSlider } from "@/components/HeroSlider.dynamic";
+import { PromoBar } from "@/components/PromoBar.dynamic";
+import { CollectionsSection } from "@/components/CollectionsSection";
 import { ProductCard } from "@/components/ProductCard";
 
 // Import product images
@@ -136,24 +136,7 @@ const Index = () => {
       <PromoBar />
 
       {/* Collections Section */}
-      <section className="py-8 md:py-12 lg:py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground mb-3">
-              Our Collections
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Discover our curated collections of authentic Kanchipuram sarees and exquisite jewellery
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {categories.map((category, index) => (
-              <CategoryCard key={index} {...category} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <CollectionsSection />
 
       {/* Featured Products Section */}
       <section className="py-8 md:py-12 lg:py-16 bg-muted/30">
@@ -209,6 +192,7 @@ const Index = () => {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>contact@kanchipride.com</li>
                 <li>+91 XXX XXX XXXX</li>
+                <li><a href="/dashboard" className="hover:text-primary transition-colors">Dashboard</a></li>
               </ul>
             </div>
           </div>
