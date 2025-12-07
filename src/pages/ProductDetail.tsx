@@ -2,6 +2,7 @@ import { ArrowLeft, Heart, Share2, ShoppingCart, MessageCircle, ChevronLeft, Che
 import { Button } from "@/components/ui/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import { Header } from "@/components/Header.dynamic";
 import saree1 from "@/assets/saree-1.jpg";
 import saree2 from "@/assets/saree-2.jpg";
 import saree3 from "@/assets/saree-3.jpg";
@@ -53,18 +54,9 @@ export default function ProductDetail() {
       </header>
 
       {/* Desktop Header */}
-      <header className="hidden lg:block sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
-        <div className="container mx-auto px-6 py-4">
-          <Button
-            variant="ghost"
-            onClick={() => navigate(-1)}
-            className="gap-2 text-muted-foreground hover:text-foreground"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Products
-          </Button>
-        </div>
-      </header>
+      <div className="hidden lg:block">
+        <Header />
+      </div>
 
       {/* Main Content */}
       <div className="lg:container lg:mx-auto lg:px-6 lg:py-8">
